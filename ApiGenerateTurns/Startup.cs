@@ -29,10 +29,10 @@ namespace ApiGenerateTurns
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<ControlTurnContext>(
-                options => options.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=CONTROL_TURNOS;Integrated Security=True")
-                );
-            services.AddScoped <IRepositoryTurn<Turno, VMRequestTurn>, RepositoryTurn>();
+            services.AddScoped<IRepositoryTurn<Turno, RequestTurn>, RepositoryTurn>()
+                    .AddScoped<IrepositoryService<Servicio>, RepositoryService>();
+
+            services.AddDbContext<ControlTurnContext>(opt => opt.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=CONTROL_TURNOS;Integrated Security=True"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

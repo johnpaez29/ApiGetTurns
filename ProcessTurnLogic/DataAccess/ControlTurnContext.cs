@@ -13,7 +13,9 @@ namespace ProcessTurnLogic.DataAccess
         : base(options)
         {
         }
-        public DbSet<Turno> Turnos { get; set; }
+        public DbSet<Turno> Turns { get; set; }
+
+        public DbSet<Servicio> servicios { get; set; }
 
     }
 }

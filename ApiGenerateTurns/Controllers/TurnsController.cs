@@ -13,18 +13,42 @@ namespace ApiGenerateTurns.Controllers
     [Route("api/[controller]")]
     public class TurnsController : ControllerBase
     {
-        IRepositoryTurn<Turno, VMRequestTurn> repositoryTurn;
-        public TurnsController(IRepositoryTurn<Turno, VMRequestTurn> repositoryTurn) 
+        IRepositoryTurn<Turno, RequestTurn> repositoryTurn;
+        IrepositoryService<Servicio> repositoryService;
+
+        public TurnsController(IRepositoryTurn<Turno, RequestTurn> repositoryTurn, IrepositoryService<Servicio> repositoryService) 
         {
             this.repositoryTurn = repositoryTurn;
+            this.repositoryService = repositoryService;
         }
+
 
         [HttpPost]
         public IEnumerable<Turno> GetTurns(VMRequestTurn requestTurn)
         {
-            if (requestTurn == null)
+            if (!ModelState.IsValid)
                 return null;
-            IEnumerable<Turno> turnos = repositoryTurn.GetData(requestTurn);
+            IEnumerable<Turno> turnos;
+            Servicio servicio;
+            try
+            {
+                servicio = repositoryService.GetDataByName(requestTurn.IdServicio);
+                if (servicio == null || servicio.id_servicio == 0)
+                    return null;
+                RequestTurn requestTurnData = new RequestTurn
+                {
+                    FechaInicio = requestTurn.FechaInicio,
+                    FechaFin = requestTurn.FechaFin,
+                    IdServicio = 43
+                };
+                turnos = repositoryTurn.GetData(requestTurnData);
+
+            }
+            catch (Exception e)
+            {
+
+                return null;
+            }
 
             return turnos;
         }

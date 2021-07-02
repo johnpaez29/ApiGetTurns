@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ProcessTurnLogic.DataAccess
 {
-    public class RepositoryTurn : IRepositoryTurn<Turno, VMRequestTurn>
+    public class RepositoryTurn : IRepositoryTurn<Turno, RequestTurn>
     {
         ControlTurnContext ControlTurnContext;
 
@@ -15,7 +15,7 @@ namespace ProcessTurnLogic.DataAccess
         {
             this.ControlTurnContext = controlTurn;
         }
-        public IEnumerable<Turno> GetData(VMRequestTurn info)
+        public IEnumerable<Turno> GetData(RequestTurn info)
         {
             var param = new SqlParameter[] {
                         new SqlParameter() {
@@ -37,7 +37,7 @@ namespace ProcessTurnLogic.DataAccess
                             Direction = System.Data.ParameterDirection.Input,
                             Value = info.FechaFin.ToString("dd/MM/yyyy")
                         }};
-            return ControlTurnContext.Turnos.FromSqlRaw("GetTurns @IdServicio, @FechaInicio, @FechaFin", param);
+            return ControlTurnContext.Turns.FromSqlRaw("GetTurns @IdServicio, @FechaInicio, @FechaFin", param);
         }
     }
 }

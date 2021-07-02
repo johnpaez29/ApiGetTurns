@@ -4,12 +4,12 @@ using System.Text;
 
 namespace ProcessTurnLogic.Models
 {
-    public class VMRequestTurn
+    public class RequestTurn
     {
         public DateTime FechaInicio { get; set; }
 
         public DateTime FechaFin { get; set; }
 
-        public string IdServicio { get; set; }
+        public long IdServicio { get; set; }
     }
 }
